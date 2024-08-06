@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+1.Created some basic format for the stopwatch(html,css)
+2.using useEffect for fetching intervals and setinterval function for different states
+3. using different states for hours,minutes,seconds,miliseconds.
+
+
+### UseEffect ###
+1. Used for side effects such as fetching data,directly updating the dom and timer
+2. accepts two arguments 1- function , 2- dependency
