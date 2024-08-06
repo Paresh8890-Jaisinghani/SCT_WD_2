@@ -1,0 +1,38 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.timerbox{
+  margin-top: 10%;
+  padding: 3%;
+  height: fit-content;
+  width: 30%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+}
+.timerbox .timer{
+  margin-bottom: 60px;
+  border: 2px solid red;
+  height: 60px;
+}
+
+.timerbox .bottom{
+  display: flex;
+  justify-content: space-around;
+  /* border: 2px solid blue; */
+  margin-bottom: 10px;
+}
+
+.timerbox button{
+  font-size: 20px;
+}
