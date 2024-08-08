@@ -4,111 +4,118 @@ import { FaPlayCircle } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { PiFlagPennantFill } from "react-icons/pi";
 import { FaPauseCircle } from "react-icons/fa";
+import Lap from "./laps.js";
 const Stopwatch=()=>{
-    const [seconds,setseconds] =  useState(0);
-    const [minutes,setminutes] = useState(0);
-    const [hours,sethours] = useState(0);
-    const [miliseconds,setmiliseconds] = useState(0);
-    const [laps,setlaps] = useState([]);
-    const [isrunning,setisrunning] = useState(false);
+    const [seconds, setSeconds] = useState(0);
+    const [minutes, setMinutes] = useState(0);
+    const [hours, setHours] = useState(0);
+    const [miliSeconds, setMiliSeconds] = useState(0);
+    const [laps, setLaps] = useState([]);
+    const [isRunning, setIsRunning] = useState(false);
 
-
-    const format=(num)=>{
-        if(num < 10){
-            return "0" + num;
-        }
-        else{
-            return num.toString();
-        }
+    const formatWithLeadingZero = (number) => {
+        if (number < 10) return "0" + number;
+        else return number.toString();
     };
 
+    useEffect(() => {
+        let interval;
 
-    useEffect(()=>{
-        let intv;
-        if(isrunning){
-            intv = setInterval(() => {
-                setmiliseconds((miliseconds)=>{
-                    if(miliseconds >= 99){
-                        setseconds((seconds)=>{
-                            if(seconds >= 59){
-                                setminutes((minutes)=>{
-                                    if(minutes >= 59){
-                                        sethours((prevhour)=>prevhour+1);
+        if (isRunning) {
+            interval = setInterval(() => {
+                setMiliSeconds((miliSeconds) => {
+                    if (miliSeconds >= 99) {
+                        setSeconds((seconds) => {
+                            if (seconds >= 59) {
+                                setMinutes((minutes) => {
+                                    if (minutes >= 59) {
+                                        setHours((prevHours) => prevHours + 1);
                                         return 0;
-                                    }
-                                    else{
+                                    } else {
                                         return minutes + 1;
                                     }
                                 });
-                            }
-                            else{
+                                return 0;
+                            } else {
                                 return seconds + 1;
                             }
                         });
                         return 0;
+                    } else {
+                        return miliSeconds + 1;
                     }
-                    else{
-                        return miliseconds + 1;
-                    }
-                })
+                });
             }, 10);
         }
-        return ()=> clearInterval(intv);
-    },[isrunning]);
+        return () => clearInterval(interval);
+    }, [isRunning]);
 
-    const handelst=()=>{
-        setisrunning(true);
+    const handleStart = () => {
+        setIsRunning(true);
     };
 
-    const handlepause =()=>{
-        setisrunning(false);
+    const handlePause = () => {
+        setIsRunning(false);
     };
 
-    const handellap =()=>{
-        const laptime =
-        format(hours) +
-        ":" + 
-        format(minutes) +
-        ":" + 
-        format(seconds) +
-        ":" +
-        format(miliseconds);
+    const handleLap = () => {
+        const lapTime =
+            formatWithLeadingZero(hours) +
+            ":" +
+            formatWithLeadingZero(minutes) +
+            ":" +
+            formatWithLeadingZero(seconds) +
+            "." +
+            formatWithLeadingZero(miliSeconds);
+        setLaps((prevLaps) => [...prevLaps, lapTime]);
+    };
 
-        setlaps((prevlap)=>[...prevlap,laptime]);
-    }
-
-    const handelreset=()=>{
-        setisrunning(false);
-        sethours(0);
-        setseconds(0);
-        setmiliseconds(0);
-        setminutes(0);
-        setlaps([]);
+    const handleReset = () => {
+        setIsRunning(false);
+        setMiliSeconds(0);
+        setSeconds(0);
+        setMinutes(0);
+        setHours(0);
+        setLaps([]);
     };
     return(
         <div className="timerbox">
         {/* for timer */}
         <div className="timer">
-          Timer
+          {formatWithLeadingZero(hours)} : {formatWithLeadingZero(minutes)} : {" "}
+          {formatWithLeadingZero(seconds)} : {formatWithLeadingZero(miliSeconds)}
         </div>
-        {/* for lap time */}
-        <div className="bottom">
 
-        <div className="lap">
-        <button> <PiFlagPennantFill/></button>
-        </div>
-        {/* for starting the time */}
-        <div className="start">
-         <button><FaPlayCircle/></button> 
-        </div>
-        {/* for pause */}
-        <button className="pause"><FaPauseCircle/></button>
 
-        {/* for reset */}
-        <div className="reset">
-          <button><GrPowerReset/></button>
+        <div className="buttons">
+            <button
+                className = "btn"
+                onClick={handleStart}
+                disabled = {isRunning}
+                style={{cursor : isRunning ? "not-allowed" : "pointer"}}
+                >
+                    <FaPlayCircle/>
+            </button>
+
+            <button
+            className="btn"
+            onClick={handlePause}
+            >
+                <FaPauseCircle/>
+            </button>
+            <button
+            onClick={handleLap}
+            className="btn">
+                <PiFlagPennantFill/>
+            </button>
+            <button
+            onClick={handleReset}
+            className ="btn"
+            >
+                <GrPowerReset/>
+            </button>
         </div>
-        </div>
+        <Lap laps={laps} />
       </div>
     )
 }

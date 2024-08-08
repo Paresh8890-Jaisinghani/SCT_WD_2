@@ -72,7 +72,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 1.Created some basic format for the stopwatch(html,css)
 2.using useEffect for fetching intervals and setinterval function for different states
-3. using different states for hours,minutes,seconds,miliseconds.
+3.using different states for hours,minutes,seconds,miliseconds.
+4.laps.js for showing laps
 
 
 ### UseEffect ###
