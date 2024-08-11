@@ -1,4 +1,3 @@
-// Lap.js
 import React from "react";
 
 export default function Laps({ laps }) {

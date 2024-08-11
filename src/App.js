@@ -5,7 +5,7 @@ import Stopwatch from './components/stopwatch';
 function App() {
   return (
     <div className="App">
-      <h1>StopWatch</h1>
+      <div className="nav">StopWatch</div>
       <Stopwatch/>
     </div>
   );
